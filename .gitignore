@@ -1,0 +1,21 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# misc
+.DS_Store
+*.tsbuildinfo
+
+# env
+.env*
+
+# vercel
+.vercel
+
+# firmware build artifacts (PlatformIO)
+firmware/**/.pio/
+firmware/**/.vscode/
