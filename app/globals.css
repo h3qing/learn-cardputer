@@ -1,0 +1,726 @@
+/* ---------------------------------------------------------------------------
+   Cardputer 硬件冒险 — design tokens
+   对齐 heqing-blog DESIGN.md 的 "Editorial" register:
+   羊皮纸/墨色双主题、大地色系、衬线标题、金棕 accent、1px 边框、克制阴影。
+   所有可主题化颜色一律走 CSS 变量;唯一的例外是 Cardputer 插画的"实物色"
+   (M5 橙色机身、LCD 墨绿屏),它们与主题无关,如同 DESIGN.md 的 phase tints。
+   --------------------------------------------------------------------------- */
+:root {
+  --font-display: "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", Georgia, SimSun, serif;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Geist Mono", Menlo, Consolas, monospace;
+
+  /* illustration constants (theme-independent) */
+  --m5-orange: #ff6b1a;
+  --m5-orange-deep: #c74e0d;
+  --screen-bg: #0d1c15;
+  --screen-ink: #8cf5bc;
+  --sage: #7da995;
+
+  /* light palette (default) */
+  --bg-page: #faf7f0;
+  --bg-panel: #ffffff;
+  --bg-box: #f3efe5;
+  --bg-box-2: #ece6d9;
+  --border-subtle: #e6dfd0;
+  --border-primary: #d6ccb9;
+  --border-secondary: #c8bda7;
+  --text-primary: #15130e;
+  --text-secondary: #46413a;
+  --text-label: #7d766a;
+  --text-muted: #8d8678;
+  --accent: #a06a40;
+  --sel-bg: #b8845a;
+  --sel-text: #faf7f2;
+  --code-str: #007f7a;
+  --code-num: #e25a1c;
+  --code-comment: #a19595;
+}
+
+html[data-theme="dark"] {
+  --bg-page: #0b0b0c;
+  --bg-panel: #121214;
+  --bg-box: #17181a;
+  --bg-box-2: #1e1f22;
+  --border-subtle: #262729;
+  --border-primary: #363739;
+  --border-secondary: #424345;
+  --text-primary: #f3f2ef;
+  --text-secondary: #c6c1b8;
+  --text-label: #9d978d;
+  --text-muted: #8a857c;
+  --accent: #cda273;
+  --sel-bg: #b8845a;
+  --sel-text: #faf7f2;
+  --code-str: #4fb3ad;
+  --code-num: #ff8b47;
+  --code-comment: #8a857c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-page);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.75;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3 {
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--sel-bg);
+  color: var(--sel-text);
+}
+
+/* ---- site chrome ---------------------------------------------------------- */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 24px;
+}
+
+.site-mark {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.site-mark-dim {
+  color: var(--text-muted);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.site-nav a:hover {
+  color: var(--text-primary);
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--text-label);
+  font-size: 14px;
+  line-height: 1;
+  padding: 6px 9px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 48px;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+
+.site-footer-dim {
+  opacity: 0.7;
+}
+
+/* ---- hero ------------------------------------------------------------------ */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: 48px;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 64px 24px 88px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-label);
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.hero-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.4vw, 24px);
+  color: var(--accent);
+  margin-top: 14px;
+}
+
+.hero-intro {
+  color: var(--text-secondary);
+  max-width: 46ch;
+  margin-top: 20px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.btn-primary,
+.btn-ghost {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  padding: 12px 22px;
+  border-radius: 6px;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-page);
+  font-weight: 700;
+}
+
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--accent) 85%, var(--text-primary));
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+/* ---- the CSS Cardputer (signature element, illustration colors) ------------ */
+.device {
+  justify-self: center;
+  width: min(360px, 100%);
+  background: linear-gradient(160deg, var(--m5-orange) 0%, var(--m5-orange-deep) 100%);
+  border-radius: 20px;
+  padding: 18px 18px 16px;
+  box-shadow:
+    0 14px 36px color-mix(in srgb, var(--text-primary) 22%, transparent),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transform: rotate(-2deg);
+}
+
+.device-top {
+  position: relative;
+}
+
+.device-screen {
+  background: var(--screen-bg);
+  border-radius: 8px;
+  border: 4px solid #14100b;
+  aspect-ratio: 240 / 135;
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--screen-ink);
+  overflow: hidden;
+}
+
+.screen-line {
+  opacity: 0;
+  animation: boot 0.01s steps(1) forwards;
+}
+
+.boot-1 { animation-delay: 0.4s; }
+.boot-2 { animation-delay: 1s; }
+.boot-3 { animation-delay: 1.6s; }
+.boot-4 { animation-delay: 2.4s; color: #f4ecdf; }
+
+@keyframes boot {
+  to { opacity: 1; }
+}
+
+.cursor {
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.device-silk {
+  position: absolute;
+  right: 2px;
+  bottom: -16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.device-keyboard {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  background: #1a130c;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.device-key {
+  aspect-ratio: 1 / 0.9;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #372b1d 0%, #2a2015 100%);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .screen-line { animation: none; opacity: 1; }
+  .cursor { animation: none; }
+  .btn-primary:hover { transform: none; }
+  body { transition: none; }
+}
+
+/* ---- sections --------------------------------------------------------------- */
+.roadmap-section,
+.about-section {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 56px 24px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 900;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.section-title-silk {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  color: var(--text-label);
+  border: 1px solid var(--border-primary);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.section-note {
+  color: var(--text-secondary);
+  margin-top: 12px;
+  max-width: 62ch;
+}
+
+/* ---- roadmap:一条总线,每课一颗芯片 ---------------------------------------- */
+.roadmap {
+  list-style: none;
+  position: relative;
+  margin-top: 40px;
+  display: grid;
+  gap: 22px;
+  padding-left: 40px;
+}
+
+.roadmap::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  top: 10px;
+  bottom: 10px;
+  border-left: 2px dashed var(--border-secondary);
+}
+
+.roadmap-item {
+  position: relative;
+}
+
+.roadmap-item::before {
+  content: "";
+  position: absolute;
+  left: -35px;
+  top: 26px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--bg-page);
+}
+
+.lesson-card {
+  display: block;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 22px 26px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.lesson-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.lesson-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lesson-ref {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--text-label);
+  text-transform: uppercase;
+}
+
+.done-mark {
+  font-family: var(--font-mono);
+  color: var(--sage);
+  font-size: 14px;
+}
+
+.lesson-card h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 900;
+  margin-top: 10px;
+}
+
+.lesson-summary {
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin-top: 8px;
+  max-width: 68ch;
+}
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.difficulty {
+  color: var(--accent);
+  letter-spacing: 0.2em;
+}
+
+.lesson-project {
+  color: var(--text-label);
+}
+
+/* ---- about ------------------------------------------------------------------ */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 36px;
+}
+
+.about-grid h3 {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.about-grid p {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+/* ---- lesson page -------------------------------------------------------------- */
+.lesson-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.crumb {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.crumb:hover {
+  color: var(--accent);
+}
+
+.lesson-header {
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.lesson-header .lesson-ref {
+  display: block;
+  margin-top: 28px;
+}
+
+.lesson-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 5vw, 44px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+.lesson-subtitle {
+  font-family: var(--font-display);
+  color: var(--accent);
+  font-size: 19px;
+  margin-top: 10px;
+}
+
+.lesson-header .lesson-meta {
+  margin-top: 18px;
+}
+
+/* lesson markdown body */
+.lesson-body {
+  padding-top: 12px;
+}
+
+.lesson-body h2 {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 900;
+  margin: 44px 0 16px;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent);
+}
+
+.lesson-body h3 {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 900;
+  margin: 32px 0 12px;
+}
+
+.lesson-body p {
+  margin: 14px 0;
+}
+
+.lesson-body ul,
+.lesson-body ol {
+  margin: 14px 0;
+  padding-left: 26px;
+}
+
+.lesson-body li {
+  margin: 6px 0;
+}
+
+.lesson-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 0.1em;
+}
+
+.lesson-body blockquote {
+  border-left: 2px solid var(--accent);
+  padding: 4px 18px;
+  margin: 18px 0;
+  color: var(--text-secondary);
+  background: var(--bg-box);
+  border-radius: 0 8px 8px 0;
+}
+
+.lesson-body code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-box);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--text-primary);
+}
+
+.lesson-body pre {
+  background: var(--bg-box);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.lesson-body pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.lesson-body table {
+  border-collapse: collapse;
+  margin: 18px 0;
+  width: 100%;
+  font-size: 14.5px;
+}
+
+.lesson-body th,
+.lesson-body td {
+  border: 1px solid var(--border-subtle);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.lesson-body th {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-label);
+  background: var(--bg-box);
+}
+
+.lesson-body hr {
+  border: none;
+  border-top: 1px dashed var(--border-primary);
+  margin: 32px 0;
+}
+
+/* code highlighting (highlight.js token classes) */
+.hljs-keyword, .hljs-built_in { color: var(--accent); }
+.hljs-string { color: var(--code-str); }
+.hljs-comment { color: var(--code-comment); font-style: italic; }
+.hljs-number, .hljs-literal { color: var(--code-num); }
+.hljs-title, .hljs-type { color: var(--text-primary); font-weight: 600; }
+.hljs-meta { color: var(--text-label); }
+
+/* done button + prev/next */
+.lesson-done {
+  margin-top: 40px;
+}
+
+.done-btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  background: none;
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  border-radius: 6px;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.done-btn:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.done-btn.is-done {
+  border-color: var(--sage);
+  color: var(--sage);
+}
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border-subtle);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.lesson-nav a {
+  color: var(--text-muted);
+  max-width: 46%;
+}
+
+.lesson-nav a:hover {
+  color: var(--accent);
+}
+
+/* ---- responsive --------------------------------------------------------------- */
+@media (max-width: 860px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 40px;
+    padding-bottom: 56px;
+    gap: 40px;
+  }
+
+  .device {
+    transform: rotate(0deg);
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .roadmap {
+    padding-left: 32px;
+  }
+
+  .roadmap-item::before {
+    left: -27px;
+  }
+}
