@@ -1,0 +1,5 @@
+{
+  "title": "Cardputer Hardware Adventure",
+  "tagline": "A business-card-sized computer, five buses, eleven levels to clear",
+  "intro": "This is an open-source course that teaches you hardware from scratch using a single M5Stack Cardputer. The whole machine has just one brain (the ESP32-S3), and the screen, keyboard, microphone, speaker, infrared, and SD card all hang off it over some bus — SPI, GPIO, I2S/PDM, RMT, I2C. Each lesson takes down one bus, and each lesson ends with a small project you can actually hand to a friend and let them play with. The course only gives you the theory, the approach, and the acceptance criteria — you write all the firmware code yourself. Lesson one teaches you how to unbrick a device, so every experiment after that comes with zero psychological baggage."
+}

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import type { Locale } from "./i18n";
 
 export type Lesson = {
   slug: string;
@@ -21,15 +22,28 @@ export type Course = {
   intro: string;
 };
 
-const LESSONS_DIR = path.join(process.cwd(), "content", "lessons");
-const COURSE_FILE = path.join(process.cwd(), "content", "course.json");
+const CONTENT_DIR = path.join(process.cwd(), "content");
 
-const DEFAULT_COURSE: Course = {
-  title: "Cardputer 硬件冒险",
-  tagline: "一台掌上电脑,从零学会硬件",
-  intro:
-    "这是一份边玩边学的开源课程:用一台 M5Stack Cardputer,把显示、键盘、音频、无线这些硬件子系统一个个拆开搞懂,每一课都亲手做出一个好玩的小东西。",
+const DEFAULT_COURSE: Record<Locale, Course> = {
+  zh: {
+    title: "Cardputer 硬件冒险",
+    tagline: "一台掌上电脑,从零学会硬件",
+    intro:
+      "这是一份边玩边学的开源课程:用一台 M5Stack Cardputer,把显示、键盘、音频、无线这些硬件子系统一个个拆开搞懂,每一课都亲手做出一个好玩的小东西。",
+  },
+  en: {
+    title: "Cardputer Hardware Adventure",
+    tagline: "One palm-sized computer, hardware from zero",
+    intro:
+      "An open-source, learn-by-building course: take one M5Stack Cardputer and pull apart its display, keyboard, audio, and radio subsystems one by one — building something fun in every lesson.",
+  },
 };
+
+function lessonsDir(locale: Locale): string {
+  return locale === "en"
+    ? path.join(CONTENT_DIR, "lessons", "en")
+    : path.join(CONTENT_DIR, "lessons");
+}
 
 /** Parse one lesson markdown source into a Lesson. Pure — easy to test. */
 export function parseLesson(raw: string, filename: string): Lesson {
@@ -49,32 +63,34 @@ export function parseLesson(raw: string, filename: string): Lesson {
   };
 }
 
-/** 眉标用的短硬件标签:取每个主题冒号前的部分,最多 n 个。 */
+/** 眉标用的短硬件标签:取每个主题冒号/破折号前的部分,最多 n 个。 */
 export function shortTopics(hardware: string[], n = 3): string {
-  return hardware
-    .slice(0, n)
-    .map((t) => t.split(/[::(]/)[0].trim())
-    .join(" / ");
+  const tags = hardware.slice(0, n).map((t) => t.split(/[::(（]|\s[—–-]\s/)[0].trim());
+  // 英文标签偏长,超出就少放一个,保持眉标一行内
+  while (tags.length > 1 && tags.join(" / ").length > 72) tags.pop();
+  return tags.join(" / ");
 }
 
-export function getAllLessons(): Lesson[] {
-  if (!fs.existsSync(LESSONS_DIR)) return [];
-  const files = fs.readdirSync(LESSONS_DIR).filter((f) => f.endsWith(".md"));
+export function getAllLessons(locale: Locale = "zh"): Lesson[] {
+  const dir = lessonsDir(locale);
+  if (!fs.existsSync(dir)) return [];
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
   return files
-    .map((f) => parseLesson(fs.readFileSync(path.join(LESSONS_DIR, f), "utf8"), f))
+    .map((f) => parseLesson(fs.readFileSync(path.join(dir, f), "utf8"), f))
     .sort((a, b) => a.order - b.order);
 }
 
-export function getLessonBySlug(slug: string): Lesson | undefined {
-  return getAllLessons().find((l) => l.slug === slug);
+export function getLessonBySlug(slug: string, locale: Locale = "zh"): Lesson | undefined {
+  return getAllLessons(locale).find((l) => l.slug === slug);
 }
 
-export function getCourse(): Course {
-  if (!fs.existsSync(COURSE_FILE)) return DEFAULT_COURSE;
-  const data = JSON.parse(fs.readFileSync(COURSE_FILE, "utf8"));
+export function getCourse(locale: Locale = "zh"): Course {
+  const file = path.join(CONTENT_DIR, locale === "en" ? "course.en.json" : "course.json");
+  if (!fs.existsSync(file)) return DEFAULT_COURSE[locale];
+  const data = JSON.parse(fs.readFileSync(file, "utf8"));
   return {
-    title: String(data.title ?? DEFAULT_COURSE.title),
-    tagline: String(data.tagline ?? DEFAULT_COURSE.tagline),
-    intro: String(data.intro ?? DEFAULT_COURSE.intro),
+    title: String(data.title ?? DEFAULT_COURSE[locale].title),
+    tagline: String(data.tagline ?? DEFAULT_COURSE[locale].tagline),
+    intro: String(data.intro ?? DEFAULT_COURSE[locale].intro),
   };
 }

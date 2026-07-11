@@ -6,16 +6,16 @@ import LessonView from "@/components/LessonView";
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return getAllLessons("zh").map((l) => ({ slug: l.slug }));
+  return getAllLessons("en").map((l) => ({ slug: l.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const lesson = getLessonBySlug(slug, "zh");
-  return { title: lesson ? STRINGS.zh.lessonMetaTitle(lesson.order, lesson.title) : "课程" };
+  const lesson = getLessonBySlug(slug, "en");
+  return { title: lesson ? STRINGS.en.lessonMetaTitle(lesson.order, lesson.title) : "Lesson" };
 }
 
-export default async function LessonPage({ params }: Props) {
+export default async function EnglishLessonPage({ params }: Props) {
   const { slug } = await params;
-  return <LessonView locale="zh" slug={slug} />;
+  return <LessonView locale="en" slug={slug} />;
 }

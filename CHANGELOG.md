@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [MAJOR.MINOR.PATCH.MICRO] - YYYY-MM-DD
 
+## [0.2.0.0] - 2026-07-11
+
+### Added
+- 全站双语:新增 `/en` 英文版(11 课全部翻译 + 英文首页/界面文案),右上角中英切换,当前页面互跳
+- 术语注释系统:88 个技术缩写与术语在正文中显示虚线下划线,悬停查看中/英注释,点击打开谷歌搜索(自动跳过代码块与链接)
+
 ## [0.1.0.0] - 2026-07-11
 
 ### Added
