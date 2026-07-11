@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { STRINGS, type Locale } from "@/lib/i18n";
 
 const KEY = "cardputer-done";
 
@@ -18,14 +19,15 @@ export function DoneMark({ slug }: { slug: string }) {
   useEffect(() => setDone(readDone().includes(slug)), [slug]);
   if (!done) return null;
   return (
-    <span className="done-mark" title="已完成">
+    <span className="done-mark" title="✓">
       ✓
     </span>
   );
 }
 
 /** Toggle button on a lesson page. Progress lives in localStorage only. */
-export function DoneButton({ slug }: { slug: string }) {
+export function DoneButton({ slug, locale = "zh" }: { slug: string; locale?: Locale }) {
+  const t = STRINGS[locale];
   const [done, setDone] = useState(false);
   useEffect(() => setDone(readDone().includes(slug)), [slug]);
 
@@ -38,7 +40,7 @@ export function DoneButton({ slug }: { slug: string }) {
 
   return (
     <button className={done ? "done-btn is-done" : "done-btn"} onClick={toggle}>
-      {done ? "✓ 已完成,点击撤销" : "标记为已完成"}
+      {done ? t.undoneBtn : t.doneBtn}
     </button>
   );
 }

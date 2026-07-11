@@ -6,6 +6,8 @@ import python from "highlight.js/lib/languages/python";
 import bash from "highlight.js/lib/languages/bash";
 import ini from "highlight.js/lib/languages/ini";
 import json from "highlight.js/lib/languages/json";
+import { wrapGlossary } from "./glossary";
+import type { Locale } from "./i18n";
 
 hljs.registerLanguage("cpp", cpp);
 hljs.registerLanguage("python", python);
@@ -23,6 +25,7 @@ const marked = new Marked(
   })
 );
 
-export function renderMarkdown(md: string): string {
-  return marked.parse(md, { async: false }) as string;
+export function renderMarkdown(md: string, locale: Locale = "zh"): string {
+  const html = marked.parse(md, { async: false }) as string;
+  return wrapGlossary(html, locale);
 }

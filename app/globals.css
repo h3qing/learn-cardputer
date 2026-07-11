@@ -129,6 +129,23 @@ a {
   color: var(--text-primary);
 }
 
+.lang-toggle {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--text-label);
+  padding: 6px 9px;
+  line-height: 1;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.lang-toggle:hover {
+  border-color: var(--border-primary);
+  color: var(--text-primary);
+}
+
 .theme-toggle {
   background: none;
   border: 1px solid var(--border-subtle);
@@ -641,6 +658,51 @@ a {
   border: none;
   border-top: 1px dashed var(--border-primary);
   margin: 32px 0;
+}
+
+/* ---- glossary terms:虚线下划线,hover 出注释,点击谷歌搜索 ------------------ */
+.lesson-body a.term {
+  color: inherit;
+  text-decoration: underline dotted var(--border-secondary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  cursor: help;
+  position: relative;
+}
+
+.lesson-body a.term:hover {
+  text-decoration-color: var(--accent);
+}
+
+.lesson-body a.term::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  z-index: 10;
+  width: max-content;
+  max-width: min(320px, 74vw);
+  background: var(--bg-box-2);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  white-space: normal;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--text-primary) 12%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+
+.lesson-body a.term:hover::after,
+.lesson-body a.term:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* code highlighting (highlight.js token classes) */

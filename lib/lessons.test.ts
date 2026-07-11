@@ -41,7 +41,7 @@ describe("parseLesson", () => {
 });
 
 describe("content/lessons integrity", () => {
-  const lessons = getAllLessons();
+  const lessons = getAllLessons("zh");
 
   it("has lessons", () => {
     expect(lessons.length).toBeGreaterThan(0);
@@ -70,6 +70,38 @@ describe("content/lessons integrity", () => {
       for (const section of ["## 本课目标", "## 硬件原理", "## 动手实验", "## 挑战任务", "## 检查点"]) {
         expect(l.content, `${l.slug} 缺少 ${section}`).toContain(section);
       }
+    }
+  });
+});
+
+describe("english translations parity", () => {
+  const zh = getAllLessons("zh");
+  const en = getAllLessons("en");
+
+  // Translations are generated in a separate step; enforce parity only once
+  // any English lesson exists, so the suite stays green mid-generation.
+  it.skipIf(en.length === 0)("every zh lesson has an en counterpart with matching slug/order", () => {
+    expect(en.map((l) => l.slug).sort()).toEqual(zh.map((l) => l.slug).sort());
+    for (const l of en) {
+      const source = zh.find((z) => z.slug === l.slug)!;
+      expect(l.order, l.slug).toBe(source.order);
+      expect(l.difficulty, l.slug).toBe(source.difficulty);
+      expect(l.estHours, l.slug).toBe(source.estHours);
+    }
+  });
+
+  it.skipIf(en.length === 0)("en lessons use the canonical section headings", () => {
+    for (const l of en) {
+      for (const section of ["## Goals", "## How the Hardware Works", "## Hands-on Lab", "## Challenge", "## Checkpoint"]) {
+        expect(l.content, `${l.slug} missing ${section}`).toContain(section);
+      }
+    }
+  });
+
+  it.skipIf(en.length === 0)("en lessons contain no leftover Chinese characters", () => {
+    for (const l of en) {
+      const cjk = (l.title + l.subtitle + l.summary + l.project + l.content).match(/[一-鿿]+/g);
+      expect(cjk, `${l.slug}: ${cjk?.slice(0, 5).join(" ")}`).toBeNull();
     }
   });
 });
