@@ -20,6 +20,7 @@ export const STRINGS = {
     langSwitch: "EN",
     eyebrow: "开源硬件学习计划 · OPEN SOURCE",
     startBtn: "从第 1 课开始",
+    resumeBtn: (n: number) => `继续:第 ${n} 课 →`,
     browseBtn: "浏览全部课程",
     busTitle: "课程总线",
     busNote: (n: number) =>
@@ -56,6 +57,7 @@ export const STRINGS = {
     langSwitch: "中文",
     eyebrow: "OPEN-SOURCE HARDWARE COURSE",
     startBtn: "Start with Lesson 1",
+    resumeBtn: (n: number) => `Resume Lesson ${n} →`,
     browseBtn: "Browse all lessons",
     busTitle: "The Course Bus",
     busNote: (n: number) =>

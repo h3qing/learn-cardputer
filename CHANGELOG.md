@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 Format: [MAJOR.MINOR.PATCH.MICRO] - YYYY-MM-DD
 
+## [0.2.1.0] - 2026-07-11
+
+### Added
+- 学习进度记忆:本地记录最后访问的课程,首页按钮变为「继续:第 N 课」
+- 课程页右侧圆点导航:11 课一览,当前课高亮、已完成实心,悬停显示课名,点击随时跳转(窄屏自动隐藏)
+
 ## [0.2.0.0] - 2026-07-11
 
 ### Added
