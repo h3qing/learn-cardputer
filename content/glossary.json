@@ -1,0 +1,532 @@
+{
+  "terms": [
+    {
+      "term": "SPI",
+      "zh": "串行外设接口(Serial Peripheral Interface)——高速同步总线,主机用时钟线打拍子逐位传数据,屏幕和 SD 卡都挂在它上面",
+      "en": "Serial Peripheral Interface — a fast synchronous bus where the master clocks data out bit by bit; drives the display and SD card",
+      "q": "SPI serial peripheral interface"
+    },
+    {
+      "term": "I2S",
+      "zh": "集成电路间音频总线(Inter-IC Sound)——三根线按固定节拍搬运数字音频样本,节奏必须分毫不差,扬声器和麦克风靠它",
+      "en": "Inter-IC Sound — a three-wire bus that ships digital audio samples on a strict, never-pausing beat; it feeds the speaker and reads the microphone",
+      "q": "I2S audio bus"
+    },
+    {
+      "term": "I2C",
+      "zh": "两线总线(Inter-Integrated Circuit)——SDA 数据加 SCL 时钟,靠 7 位地址区分设备,一对线可挂上百个低速传感器",
+      "en": "Inter-Integrated Circuit — a two-wire bus (data plus clock) that tells chips apart by 7-bit addresses, letting dozens of slow sensors share one pair of wires",
+      "q": "I2C bus protocol"
+    },
+    {
+      "term": "GPIO",
+      "zh": "通用输入输出引脚(General Purpose Input/Output)——芯片上可编程的一根导线,软件决定它输出高低电平还是读取外部电平",
+      "en": "General Purpose Input/Output — a chip pin your code can drive high or low, or read back as 1 or 0; the most primitive way a chip touches the outside world",
+      "q": "GPIO pin microcontroller"
+    },
+    {
+      "term": "UART",
+      "zh": "通用异步收发器(Universal Asynchronous Receiver-Transmitter)——最经典的点对点串口,双方按约定波特率互发字节,常用于和电脑的调试对话",
+      "en": "Universal Asynchronous Receiver-Transmitter — the classic point-to-point serial port; two wires exchange bytes at an agreed baud rate, mostly for debug chat with your computer",
+      "q": "UART serial port"
+    },
+    {
+      "term": "USB-CDC",
+      "zh": "USB 通信设备类(Communications Device Class)——芯片内置 USB 控制器模拟出的虚拟串口,免外置转接芯片,插上电脑就出现 /dev/cu.usbmodem",
+      "en": "USB Communications Device Class — the chip's built-in USB controller pretending to be a serial port, so no adapter chip is needed; it appears as /dev/cu.usbmodem on your computer",
+      "q": "USB CDC virtual serial port"
+    },
+    {
+      "term": "PDM",
+      "zh": "脉冲密度调制(Pulse Density Modulation)——MHz 级的 1-bit 脉冲流,用 1 出现的密度表达声音幅度,微型 MEMS 麦克风的常用输出格式",
+      "en": "Pulse Density Modulation — a 1-bit stream clocked in the MHz range where the density of 1s encodes loudness; the native output format of tiny MEMS microphones",
+      "q": "PDM microphone pulse density modulation"
+    },
+    {
+      "term": "PCM",
+      "zh": "脉冲编码调制(Pulse Code Modulation)——每隔固定时间把声音幅度量成一个整数,数字音频最直白的表示法,CD 和 WAV 都是它",
+      "en": "Pulse Code Modulation — sample the sound's amplitude at a fixed rate and store each measurement as an integer; the plain-vanilla digital audio representation used by CDs and WAV files",
+      "q": "PCM audio encoding"
+    },
+    {
+      "term": "RMT",
+      "zh": "红外收发外设(Remote Control Transceiver)——ESP32 专为遥控信号设计的硬件:把'电平+时长'表交给它,硬件精确生成微秒级脉冲并叠加载波",
+      "en": "Remote Control Transceiver — an ESP32 hardware peripheral that plays back a list of level-plus-duration entries with microsecond precision and adds the carrier, perfect for infrared signals",
+      "q": "ESP32 RMT peripheral"
+    },
+    {
+      "term": "NEC",
+      "zh": "最经典的红外遥控协议——9ms 引导码加 32 个数据位,用脉冲间隔的长短表示 0 和 1,地址与命令各带反码自校验",
+      "en": "The classic infrared remote-control protocol: a 9 ms leader followed by 32 bits encoded in gap lengths, with inverted-copy bytes serving as a built-in checksum",
+      "q": "NEC infrared remote protocol"
+    },
+    {
+      "term": "BLE",
+      "zh": "低功耗蓝牙(Bluetooth Low Energy)——与经典蓝牙并列的另一套协议:设备绝大部分时间睡觉,按间隔醒来广播或交换数据,纽扣电池能撑一年",
+      "en": "Bluetooth Low Energy — a separate protocol from classic Bluetooth designed around sleeping: devices wake briefly to advertise or exchange data, so a coin cell can last a year",
+      "q": "Bluetooth Low Energy BLE"
+    },
+    {
+      "term": "GATT",
+      "zh": "通用属性规范(Generic Attribute Profile)——BLE 连接后传数据的规则:不是字节流,而是一棵 Service/Characteristic/Descriptor 属性树,主机浏览并订阅",
+      "en": "Generic Attribute Profile — BLE's data model: instead of a byte stream you get a tree of Services, Characteristics and Descriptors that the host browses and subscribes to",
+      "q": "BLE GATT profile"
+    },
+    {
+      "term": "HID",
+      "zh": "人机接口设备协议(Human Interface Device)——键盘鼠标的标准语言:设备用报文描述符自我介绍,任何操作系统都能免驱识别",
+      "en": "Human Interface Device — the standard protocol for keyboards and mice; a device describes its own report format so every operating system understands it without extra drivers",
+      "q": "USB HID protocol keyboard"
+    },
+    {
+      "term": "Report Map",
+      "zh": "HID 设备的'自我介绍书'——一段标准语法的报文描述符,告诉操作系统后续每一包数据里每个字节是什么含义",
+      "en": "The HID device's machine-readable manual — a descriptor written in standard HID syntax that tells the operating system exactly how to parse every data packet the device sends",
+      "q": "HID report map descriptor"
+    },
+    {
+      "term": "CCCD",
+      "zh": "客户端特征配置描述符(Client Characteristic Configuration Descriptor)——GATT 树里的订阅开关,主机写 1 表示'这个值变了就推送给我'",
+      "en": "Client Characteristic Configuration Descriptor — the switch in the GATT tree a host writes to say 'push me updates whenever this value changes', i.e. subscribe to notifications",
+      "q": "BLE CCCD descriptor"
+    },
+    {
+      "term": "mDNS",
+      "zh": "组播 DNS(multicast DNS)——局域网设备互报名字的协议,让手机用 cardputer.local 找到设备而不用背 IP 地址",
+      "en": "Multicast DNS — a protocol that lets devices on a local network announce names like cardputer.local, so phones can find them without anyone memorizing IP addresses",
+      "q": "mDNS local hostname"
+    },
+    {
+      "term": "DHCP",
+      "zh": "动态主机配置协议(Dynamic Host Configuration Protocol)——设备连上网络后向路由器自动'要一个 IP 地址'的标准流程",
+      "en": "Dynamic Host Configuration Protocol — the automatic handshake in which your device asks the router for an IP address right after joining the network",
+      "q": "DHCP ip address assignment"
+    },
+    {
+      "term": "DNS",
+      "zh": "域名系统(Domain Name System)——互联网的电话簿,把 api.example.com 这样的名字翻译成机器实际使用的 IP 地址",
+      "en": "Domain Name System — the internet's phone book, translating human-friendly names like api.example.com into the numeric IP addresses machines actually use",
+      "q": "DNS domain name system"
+    },
+    {
+      "term": "TCP/IP",
+      "zh": "互联网基础协议族——IP 负责把数据包送到对方地址,TCP 负责按序可靠送达;在 ESP32 上由 lwIP 协议栈在后台完成",
+      "en": "The internet's core protocol family: IP routes packets to an address while TCP delivers them reliably and in order; on the ESP32 the lwIP stack does this work in the background",
+      "q": "TCP IP protocol stack"
+    },
+    {
+      "term": "TLS",
+      "zh": "传输层安全协议(Transport Layer Security)——HTTPS 里的 S:先握手协商密钥,再加密全部通信;ESP32 上一次握手约吃 40KB 内存",
+      "en": "Transport Layer Security — the S in HTTPS: a handshake negotiates encryption keys, then all traffic is encrypted; on the ESP32 one handshake costs about 40 KB of RAM",
+      "q": "TLS transport layer security"
+    },
+    {
+      "term": "HTTPS",
+      "zh": "加密版 HTTP——在 TCP 之上先做 TLS 握手再传网页或 API 数据;设备端抓天气 JSON 用的就是它",
+      "en": "HTTP over TLS — the encrypted form of web traffic; the device uses it to fetch JSON from web APIs such as a weather service, with the encryption handled before any data flows",
+      "q": "HTTPS encrypted http"
+    },
+    {
+      "term": "SSID",
+      "zh": "服务集标识符(Service Set Identifier)——WiFi 网络的名字,路由器在 beacon 帧里广播的那个字符串,你手机 WiFi 列表里的每一项",
+      "en": "Service Set Identifier — a WiFi network's name, the string routers broadcast inside their beacon frames; every entry in your phone's WiFi list is an SSID",
+      "q": "SSID wifi network name"
+    },
+    {
+      "term": "RSSI",
+      "zh": "接收信号强度指示(Received Signal Strength Indicator)——用 dBm 计量的负数:-40 很强、-70 一般、-85 基本没法用",
+      "en": "Received Signal Strength Indicator — how strong a radio signal arrives, expressed in dBm as negative numbers: -40 is strong, -70 is mediocre, -85 is barely usable",
+      "q": "RSSI wifi signal strength"
+    },
+    {
+      "term": "beacon",
+      "zh": "信标帧——路由器每隔约 100ms 向空气广播的'我在这儿'802.11 帧,携带 SSID 和信道信息;手机的 WiFi 列表就来自监听它",
+      "en": "Beacon frame — the 'I'm here' packet a router broadcasts roughly every 100 ms, carrying its SSID and channel; your phone builds its WiFi list by listening for these",
+      "q": "WiFi beacon frame"
+    },
+    {
+      "term": "802.11",
+      "zh": "WiFi 的正式名字——IEEE 定义的无线局域网标准族,规定了扫描、认证、关联等一整套空中通信流程",
+      "en": "The IEEE standard family behind WiFi, defining how devices scan for networks, authenticate, associate, and exchange frames over the air",
+      "q": "802.11 wireless standard"
+    },
+    {
+      "term": "AP",
+      "zh": "接入点(Access Point)——提供 WiFi 网络的那一端,通常就是你家路由器;WiFi 扫描扫到的每个网络背后都是一个 AP",
+      "en": "Access Point — the device hosting a WiFi network, usually your home router; every network found in a WiFi scan is one AP announcing itself",
+      "q": "WiFi access point"
+    },
+    {
+      "term": "Grove",
+      "zh": "4 线即插即用扩展接口标准——VCC、GND 加两根信号线(此处为 I2C),M5Stack 的几十种传感器模块全靠它免焊接上车",
+      "en": "A 4-pin plug-and-play connector standard (power, ground, two signal lines — configured as I2C here) that lets dozens of M5Stack sensor units attach without any soldering",
+      "q": "Grove connector M5Stack"
+    },
+    {
+      "term": "PWM",
+      "zh": "脉宽调制(Pulse Width Modulation)——用高频开关的通断比例表达模拟量,D 类功放推喇叭和 LED 调光都靠它",
+      "en": "Pulse Width Modulation — encoding an analog level as the on/off ratio of a fast switching signal; it's how Class-D amplifiers drive speakers and how LED dimming works",
+      "q": "PWM pulse width modulation"
+    },
+    {
+      "term": "NKRO",
+      "zh": "全键无冲(N-Key Rollover)——任意多键同按都能被正确识别;机械键盘靠每键串一颗二极管堵死电流绕路来实现",
+      "en": "N-Key Rollover — a keyboard that registers any number of simultaneously pressed keys correctly; real mechanical boards achieve it by wiring one diode per key to block sneak currents",
+      "q": "NKRO keyboard rollover"
+    },
+    {
+      "term": "MIDI",
+      "zh": "乐器数字接口(Musical Instrument Digital Interface)——音乐界的通用编号系统,每个音高一个编号(A4=69),课程用它换算琴键频率",
+      "en": "Musical Instrument Digital Interface — music's universal numbering scheme where every pitch gets a note number (A4 = 69); handy for mapping keyboard keys to frequencies",
+      "q": "MIDI note number"
+    },
+    {
+      "term": "ACK",
+      "zh": "应答信号(Acknowledge)——I2C 主机喊完地址后,第 9 个时钟被叫到的设备把数据线拉低表示'我在';没人拉低就是 NACK(查无此人)",
+      "en": "Acknowledge — on I2C, after the master calls out an address, the matching device pulls the data line low on the 9th clock to say 'I'm here'; silence means NACK, nobody home",
+      "q": "I2C ACK NACK signal"
+    },
+    {
+      "term": "open-drain",
+      "zh": "开漏输出——引脚只能往低拉、不能往高推,靠上拉电阻把线浮回高电平;I2C 用它保证多设备共线时永不电气打架",
+      "en": "Open-drain — an output that can only pull the wire low, relying on a pull-up resistor to restore it high; I2C uses this so multiple chips sharing a line can never fight electrically",
+      "q": "open drain output pull-up"
+    },
+    {
+      "term": "SCLK",
+      "zh": "SPI 的时钟线(Serial Clock)——主机在这根线上打拍子,每个时钟沿传输一位数据,时钟多快数据就多快",
+      "en": "Serial Clock — SPI's clock line where the master ticks the beat; one data bit moves on each clock edge, so the clock speed directly sets the data rate",
+      "q": "SPI SCLK clock signal"
+    },
+    {
+      "term": "MOSI",
+      "zh": "主出从入(Master Out, Slave In)——SPI 的数据线,主机发、外设收;屏幕的每个像素字节都从这根线灌进去",
+      "en": "Master Out, Slave In — the SPI data line carrying bytes from the master to the peripheral; every pixel byte for the display flows through this single wire",
+      "q": "SPI MOSI signal"
+    },
+    {
+      "term": "MISO",
+      "zh": "主入从出(Master In, Slave Out)——SPI 的回传数据线,外设发、主机收;从 SD 卡读数据靠它,只写不读的屏幕用不上",
+      "en": "Master In, Slave Out — the SPI return line from peripheral back to master; needed when reading data (e.g. from the SD card), unused by the write-only display",
+      "q": "SPI MISO signal"
+    },
+    {
+      "term": "CS",
+      "zh": "片选线(Chip Select)——拉低表示'我在跟你说话';多个设备共享 SPI 总线时每设备一根 CS,同一时刻只有一根为低,实现分时轮流",
+      "en": "Chip Select — pull it low to tell one device 'I'm talking to you'; on a shared SPI bus each device gets its own CS line and only one is low at a time",
+      "q": "SPI chip select signal"
+    },
+    {
+      "term": "DC",
+      "zh": "数据/命令线(Data/Command)——ST7789 屏幕特有的一根 GPIO:低电平表示这个字节是命令,高电平表示是像素数据,SPI 本身不区分",
+      "en": "Data/Command — an extra GPIO used by the ST7789 display: driven low means 'this byte is a command', high means 'this is pixel data', since SPI itself carries bytes without meaning",
+      "q": "ST7789 DC data command pin"
+    },
+    {
+      "term": "BCLK",
+      "zh": "位时钟(bit clock)——I2S 最快的心跳,每个时钟沿搬运 1 位音频数据;频率 = 采样率 × 位深 × 声道数",
+      "en": "Bit clock — I2S's fastest heartbeat, moving one audio bit per clock edge; its frequency equals sample rate times bit depth times channel count",
+      "q": "I2S BCLK bit clock"
+    },
+    {
+      "term": "LRCLK",
+      "zh": "声道选择线(又叫 WS,word select)——I2S 的慢心跳:低电平传左声道、高电平传右声道,它的翻转频率恰好等于采样率",
+      "en": "Left/Right clock (also called WS, word select) — I2S's slow heartbeat: low selects the left channel, high the right; it toggles at exactly the sample rate",
+      "q": "I2S LRCLK word select"
+    },
+    {
+      "term": "SDA",
+      "zh": "串行数据线(Serial Data)——I2C 的数据线,地址、寄存器号和数据都在这一根线上双向传输",
+      "en": "Serial Data — I2C's data wire; device addresses, register numbers and data all travel bidirectionally on this single line, paced by the SCL clock",
+      "q": "I2C SDA data line"
+    },
+    {
+      "term": "SCL",
+      "zh": "串行时钟线(Serial Clock)——I2C 的时钟线,主机在这根线上打节拍,配合 SDA 完成每一位的传输",
+      "en": "Serial Clock — I2C's clock wire where the master ticks the beat; every bit on the SDA data line is sampled in step with this clock",
+      "q": "I2C SCL clock line"
+    },
+    {
+      "term": "ESP32-S3",
+      "zh": "乐鑫出品的 SoC 芯片,Cardputer 的唯一大脑——双核 Xtensa 240MHz、8MB flash,WiFi 和 BLE 射频集成在同一颗芯片里",
+      "en": "Espressif's system-on-chip and the Cardputer's one and only brain: dual-core Xtensa at 240 MHz, 8 MB flash, with the WiFi and BLE radio built into the same die",
+      "q": "ESP32-S3 chip"
+    },
+    {
+      "term": "StampS3",
+      "zh": "M5Stack 的邮票大小计算模块——载着 ESP32-S3 芯片和天线;Cardputer 里真正的'电脑',键盘底板上的一切都只是外设",
+      "en": "M5Stack's stamp-sized compute module carrying the ESP32-S3 chip and antenna — the actual 'computer' inside the Cardputer; everything on the keyboard base board is just a peripheral",
+      "q": "M5Stack StampS3 module"
+    },
+    {
+      "term": "Xtensa",
+      "zh": "ESP32 系列使用的 CPU 指令集架构(Cadence/Tensilica 出品)——和 Mac 的 ARM/x86 机器码互不相认,所以必须交叉编译",
+      "en": "The CPU instruction-set architecture used by ESP32 chips (from Cadence/Tensilica); its machine code is incompatible with your Mac's ARM or x86, which is why cross-compilation is needed",
+      "q": "Xtensa CPU architecture"
+    },
+    {
+      "term": "SoC",
+      "zh": "片上系统(System on Chip)——把 CPU、内存、外设控制器、射频全部挤进一颗芯片;你 MacBook 里的四个部件,在这里是一颗指甲盖",
+      "en": "System on Chip — CPU, memory, peripheral controllers and radio all squeezed onto one die; what takes four separate parts in your laptop fits on a fingernail here",
+      "q": "SoC system on chip"
+    },
+    {
+      "term": "MCU",
+      "zh": "微控制器(Microcontroller Unit)——面向控制场景的单芯片小电脑,自带内存和外设接口,直接驱动硬件而非跑桌面系统",
+      "en": "Microcontroller Unit — a small single-chip computer with built-in memory and peripheral interfaces, designed to control hardware directly rather than run a desktop OS",
+      "q": "MCU microcontroller"
+    },
+    {
+      "term": "ST7789V2",
+      "zh": "屏幕背后的 LCD 驱动芯片——内含显存(GRAM),通过 SPI 接收命令和像素字节,并持续把显存内容刷到液晶面板上",
+      "en": "The LCD driver chip behind the screen: it holds the pixel memory (GRAM), receives commands and pixel bytes over SPI, and continuously refreshes the liquid-crystal panel from that memory",
+      "q": "ST7789V2 LCD driver"
+    },
+    {
+      "term": "NS4168",
+      "zh": "数字输入 D 类音频功放芯片——直接吃 I2S 数字信号,内部转成高频 PWM 推喇叭,省掉独立 DAC,效率 85% 以上",
+      "en": "A digital-input Class-D audio amplifier chip: it accepts I2S directly and drives the speaker with internal high-frequency PWM, eliminating a separate DAC and reaching 85%+ efficiency",
+      "q": "NS4168 class D amplifier"
+    },
+    {
+      "term": "SPM1423",
+      "zh": "Knowles 出品的 PDM MEMS 麦克风——输出 1-bit 高速脉冲流,由 ESP32-S3 的 I2S 外设在硬件里滤波还原成 PCM 样本",
+      "en": "A PDM MEMS microphone from Knowles: it outputs a 1-bit high-speed pulse stream, which the ESP32-S3's I2S peripheral filters back into normal PCM samples in hardware",
+      "q": "SPM1423 PDM microphone"
+    },
+    {
+      "term": "74HC138",
+      "zh": "经典 3-8 译码器芯片——输入 3 位二进制数,把对应编号的一路输出拉低、其余保持高;让键盘矩阵用 3 根 GPIO 就能驱动 8 行",
+      "en": "A classic 3-to-8 decoder chip: feed it a 3-bit number and it pulls exactly that one of its 8 outputs low; it lets the keyboard matrix drive 8 rows with only 3 GPIO pins",
+      "q": "74HC138 decoder"
+    },
+    {
+      "term": "MEMS",
+      "zh": "微机电系统(Micro-Electro-Mechanical Systems)——用芯片制造工艺造出的微型机械结构;米粒大小的 MEMS 麦克风是典型应用",
+      "en": "Micro-Electro-Mechanical Systems — microscopic mechanical structures built with chip-fabrication techniques; grain-of-rice-sized MEMS microphones are the classic application",
+      "q": "MEMS microphone sensor"
+    },
+    {
+      "term": "DAC",
+      "zh": "数模转换器(Digital-to-Analog Converter)——把数字样本变成连续电压的芯片;Cardputer 用数字功放直吃 I2S,所以整条音频链路不需要它",
+      "en": "Digital-to-Analog Converter — a chip that turns digital samples into a continuous voltage; the Cardputer skips it entirely because its amplifier accepts digital I2S audio directly",
+      "q": "DAC digital to analog converter"
+    },
+    {
+      "term": "IR",
+      "zh": "红外线(infrared)——约 940nm 的不可见光;遥控器用它以 38kHz 载波闪烁传码,肉眼看不见,但手机相机拍得到",
+      "en": "Infrared — invisible light around 940 nm; remote controls blink it at a 38 kHz carrier to send codes. Your eyes see nothing, but a phone camera catches the flashes",
+      "q": "IR infrared remote LED"
+    },
+    {
+      "term": "eFuse",
+      "zh": "芯片内的一次性可编程熔丝位——烧断即永久生效,用于安全配置(如禁用下载模式);乱烧它是这台设备唯一真正变砖的途径",
+      "en": "One-time-programmable fuse bits inside the chip — irreversible once burned, used for permanent security settings like disabling download mode; the only way to truly brick this device",
+      "q": "ESP32 eFuse"
+    },
+    {
+      "term": "FreeRTOS",
+      "zh": "嵌入式实时操作系统——Arduino 的 loop() 底下真正的调度者,管理任务、优先级和队列;WiFi 协议栈就是跑在它上面的一组任务",
+      "en": "A real-time operating system for microcontrollers — the actual scheduler beneath Arduino's loop(), managing tasks, priorities and queues; the WiFi stack runs as a set of its tasks",
+      "q": "FreeRTOS real time operating system"
+    },
+    {
+      "term": "PlatformIO",
+      "zh": "嵌入式开发工具链管家——以 VS Code 插件形态工作,自动下载编译器、库和烧录工具,一个 ini 文件描述整个工程",
+      "en": "An embedded build-system manager that works as a VS Code plugin: it auto-installs the cross-compiler, libraries and flashing tools, with one ini file describing the whole project",
+      "q": "PlatformIO embedded development"
+    },
+    {
+      "term": "ESP-IDF",
+      "zh": "乐鑫官方物联网开发框架(Espressif IoT Development Framework)——ESP32 的底层 SDK;Arduino-ESP32 只是包在它外面的一层易用壳",
+      "en": "Espressif IoT Development Framework — the vendor's official low-level SDK for ESP32 chips; the friendlier Arduino-ESP32 layer is a wrapper built on top of it",
+      "q": "ESP-IDF espressif framework"
+    },
+    {
+      "term": "bootloader",
+      "zh": "引导程序——上电后最先运行的一小段代码,负责找到并跳转到真正的应用程序;ESP32 的第一级引导固化在芯片 ROM 里,任何软件都改不掉",
+      "en": "The small program that runs first at power-on and locates, then jumps into, the real application; the ESP32's first stage is etched into on-chip ROM at the factory and can never be erased",
+      "q": "bootloader embedded boot process"
+    },
+    {
+      "term": "esptool",
+      "zh": "乐鑫官方命令行刷机工具——通过串口和 ROM bootloader 对话,读写 flash、查询芯片信息;所有图形烧录器底层调用的都是它",
+      "en": "Espressif's command-line flashing tool: it talks to the ROM bootloader over serial to read or write flash and query chip info; every GUI flasher is just a wrapper around it",
+      "q": "esptool esp32 flash tool"
+    },
+    {
+      "term": "DMA",
+      "zh": "直接内存访问(Direct Memory Access)——专职搬运工硬件:外设直接读写内存,无需 CPU 逐字节参与;音频流不卡顿的关键",
+      "en": "Direct Memory Access — dedicated hardware that moves data between memory and peripherals without the CPU touching each byte; the key to keeping audio streams glitch-free",
+      "q": "DMA direct memory access"
+    },
+    {
+      "term": "RGB565",
+      "zh": "16 位像素格式——红 5 位、绿 6 位、蓝 5 位(人眼对绿最敏感);每像素 2 字节,240×135 一帧约 63KB",
+      "en": "A 16-bit pixel format: 5 bits red, 6 bits green, 5 bits blue (eyes are most sensitive to green); at 2 bytes per pixel a 240×135 frame weighs about 63 KB",
+      "q": "RGB565 pixel format"
+    },
+    {
+      "term": "sprite",
+      "zh": "离屏画布——在内存里先把整帧画好,再一次性推到屏幕;M5GFX 里叫 M5Canvas,是双缓冲防闪烁的载体",
+      "en": "An off-screen canvas: you draw the whole frame in RAM first, then push it to the display in one go; M5GFX calls it M5Canvas, and it's the vehicle for flicker-free double buffering",
+      "q": "sprite offscreen buffer embedded graphics"
+    },
+    {
+      "term": "blit",
+      "zh": "块搬运——把一整块像素从内存一次性复制到显存的操作;pushSprite 每帧干的就是这件事",
+      "en": "Block transfer — copying a whole rectangle of pixels from RAM into display memory in one burst; that is exactly what pushSprite does every frame",
+      "q": "blit block image transfer graphics"
+    },
+    {
+      "term": "GRAM",
+      "zh": "显存(Graphics RAM)——LCD 驱动芯片内部存像素的内存;你通过 SPI 写进去什么,屏幕就持续显示什么",
+      "en": "Graphics RAM — the pixel memory inside the LCD driver chip; whatever you write into it over SPI is what the panel keeps displaying until you overwrite it",
+      "q": "GRAM LCD display memory"
+    },
+    {
+      "term": "SRAM",
+      "zh": "静态随机存储器(Static RAM)——芯片内的高速工作内存,ESP32-S3 约 512KB;变量、任务栈、帧缓冲都住在这里,断电即失",
+      "en": "Static RAM — the chip's fast on-die working memory, about 512 KB on the ESP32-S3; variables, task stacks and framebuffers all live here, and it empties at power-off",
+      "q": "SRAM static RAM microcontroller"
+    },
+    {
+      "term": "flash",
+      "zh": "闪存——设备的'硬盘'(此处 8MB):存固件和配置,断电不丢,但擦写次数有限;'刷机'就是往它的指定偏移地址写字节",
+      "en": "Flash memory — the device's 'hard drive' (8 MB here): it holds firmware and settings, survives power-off, but tolerates a limited number of erase cycles. Flashing means writing bytes into it",
+      "q": "flash memory chip storage"
+    },
+    {
+      "term": "NVS",
+      "zh": "非易失存储(Non-Volatile Storage)——flash 上的键值存储分区;WiFi 密码、BLE 配对密钥和你的应用配置都存这里,重启不丢",
+      "en": "Non-Volatile Storage — a key-value store living in a flash partition; WiFi passwords, BLE bonding keys and your app's settings are kept here and survive every reboot",
+      "q": "ESP32 NVS storage"
+    },
+    {
+      "term": "FAT",
+      "zh": "文件分配表文件系统(File Allocation Table)——1977 年的设计,至今通吃所有操作系统;SD 卡拔下来 Mac 直接能读,全靠它",
+      "en": "File Allocation Table — a filesystem designed in 1977 that every operating system still reads; it's the reason an SD card written by the device opens directly on your Mac",
+      "q": "FAT filesystem"
+    },
+    {
+      "term": "CSV",
+      "zh": "逗号分隔值(Comma-Separated Values)——一行一条记录、逗号分列的纯文本表格格式;Excel 和 pandas 直接可读,数据记录仪的通用输出",
+      "en": "Comma-Separated Values — a plain-text table format with one record per line and commas between columns; Excel and pandas open it directly, making it the data logger's lingua franca",
+      "q": "CSV comma separated values"
+    },
+    {
+      "term": "JSON",
+      "zh": "JavaScript 对象表示法(JavaScript Object Notation)——Web API 通用的文本数据格式;嵌入式端用 ArduinoJson 这类省内存的库解析",
+      "en": "JavaScript Object Notation — the web's standard text format for structured data; on a memory-starved device it's parsed with frugal libraries like ArduinoJson instead of by hand",
+      "q": "JSON data format"
+    },
+    {
+      "term": "mutex",
+      "zh": "互斥锁(mutual exclusion)——共享资源的'洗手间门锁':任务用前先上锁、用完开锁,防止两个任务同时写屏幕或 SD 卡而花屏、损坏数据",
+      "en": "Mutual-exclusion lock — a bathroom-door lock for shared resources: a task locks before use and unlocks after, so two tasks never write the screen or SD card at the same moment",
+      "q": "mutex lock concurrency"
+    },
+    {
+      "term": "firmware",
+      "zh": "固件——烧写进设备 flash 的完整程序,设备上电后跑的一切;'刷固件'就是把编译出的 .bin 文件写进 flash",
+      "en": "Firmware — the complete program stored in a device's flash memory, everything it runs from power-on; 'flashing firmware' simply means writing a compiled .bin file into that flash",
+      "q": "firmware embedded software"
+    },
+    {
+      "term": "debounce",
+      "zh": "消抖——机械按键闭合的瞬间触点会弹跳几毫秒、电平乱跳;软件要求状态稳定保持 5~20ms 才算一次真正的按键",
+      "en": "Debouncing — mechanical contacts bounce for a few milliseconds when pressed, making the signal flicker; software only accepts a key state that stays stable for 5-20 ms as one real press",
+      "q": "button debounce keyboard"
+    },
+    {
+      "term": "ghosting",
+      "zh": "鬼键——键盘矩阵按下构成 L 形的三个键时,电流沿走私通道绕路,让第四个没按的键'被按下';每键加二极管可堵死,是廉价矩阵的固有缺陷",
+      "en": "Ghosting — press three keys forming an L in a keyboard matrix and current sneaks around the loop, making a fourth untouched key register as pressed; per-key diodes prevent it",
+      "q": "keyboard matrix ghosting"
+    },
+    {
+      "term": "clipping",
+      "zh": "削波——音频幅度超出量程、波峰被削平的失真,听感刺耳;合成代码把幅度缩到 16000 而非 32767,就是在留余量防它",
+      "en": "Clipping — distortion when audio exceeds the sample range and its peaks get flattened; it sounds harsh, which is why synth code scales amplitudes down to leave headroom",
+      "q": "audio clipping distortion"
+    },
+    {
+      "term": "underrun",
+      "zh": "缓冲欠载——CPU 填音频数据的速度跟不上 DMA 播放消耗,喇叭'断粮',发出咔哒声或断续;实时音频最常见的 bug",
+      "en": "Buffer underrun — the CPU fails to refill audio data as fast as DMA plays it out, so the speaker runs dry and you hear clicks or stutters; the most common real-time audio bug",
+      "q": "audio buffer underrun"
+    },
+    {
+      "term": "ring buffer",
+      "zh": "环形缓冲——首尾相接的数组:写指针(如 DMA)在前面绕圈跑,读指针在后面追;只要不被套圈,连续数据流一个字节都不丢",
+      "en": "Ring buffer — an array that wraps around end-to-start: a writer (like DMA) laps ahead while a reader chases behind; as long as it's never lapped, a continuous stream loses nothing",
+      "q": "ring buffer circular buffer"
+    },
+    {
+      "term": "double buffering",
+      "zh": "双缓冲——在内存里画完整一帧再整体送屏,观众只见成品、不见作画过程,从根上消灭闪烁;从街机时代沿用至今的经典技术",
+      "en": "Double buffering — compose the entire frame in memory, then send it to the screen at once, so viewers only ever see finished frames; the classic anti-flicker technique since arcade days",
+      "q": "double buffering graphics"
+    },
+    {
+      "term": "frame pacing",
+      "zh": "固定帧率节拍——用 millis() 判断'到点才执行一帧',而不是 delay 硬等;保证游戏速度恒定,且等待期间还能继续扫键盘",
+      "en": "Frame pacing — running each frame on a fixed millis()-based beat instead of blocking delays, keeping game speed constant while the loop stays free to scan the keyboard in between",
+      "q": "game loop frame pacing"
+    },
+    {
+      "term": "ADSR",
+      "zh": "起音-衰减-延音-释音包络(Attack-Decay-Sustain-Release)——四段折线控制音量随时间变化,模拟真实乐器'敲击最响后衰减'的动态",
+      "en": "Attack-Decay-Sustain-Release — a four-segment envelope shaping volume over time, mimicking how real instruments sound loudest at the strike and then fade; a synthesizer building block",
+      "q": "ADSR envelope synthesizer"
+    },
+    {
+      "term": "decimation",
+      "zh": "抽取滤波——先低通滤掉高频噪声,再把每 N 个高速样本浓缩成 1 个;MHz 级 1-bit PDM 流经它还原为 16-bit PCM,精度拿速度换",
+      "en": "Decimation — low-pass filter, then keep one sample out of every N; it condenses a MHz-rate 1-bit PDM stream into ordinary 16-bit PCM, trading speed for precision",
+      "q": "decimation filter signal processing"
+    },
+    {
+      "term": "sigma-delta",
+      "zh": "西格玛-德尔塔调制——PDM 麦克风内部的调制器,把量化噪声'推'到高频段(人声在低频),配合过采样让 1 bit 也能录出好音质",
+      "en": "Sigma-delta — the modulator inside PDM microphones that shoves quantization noise up into high frequencies (voice lives down low), letting a 1-bit stream deliver real audio fidelity",
+      "q": "sigma delta modulator ADC"
+    },
+    {
+      "term": "NimBLE",
+      "zh": "轻量级蓝牙协议栈——只做 BLE、不做经典蓝牙,内存占用远小于默认的 Bluedroid;在只支持 BLE 的 ESP32-S3 上是不二之选",
+      "en": "A lightweight Bluetooth stack that implements only BLE, using far less memory than the default Bluedroid; the obvious choice on the ESP32-S3, whose radio is BLE-only anyway",
+      "q": "NimBLE bluetooth stack"
+    },
+    {
+      "term": "lwIP",
+      "zh": "轻量级 IP 协议栈(lightweight IP)——嵌入式设备上的 TCP/IP 实现;DHCP、DNS、TCP 连接都由它在 FreeRTOS 后台任务里默默完成",
+      "en": "Lightweight IP — the compact TCP/IP stack used on embedded devices; DHCP, DNS lookups and TCP connections all happen inside its FreeRTOS background tasks",
+      "q": "lwIP TCP IP stack embedded"
+    },
+    {
+      "term": "datasheet",
+      "zh": "数据手册——芯片厂商发布的官方说明书:引脚定义、寄存器表、电气参数的唯一权威来源;拿到任何新芯片都从读它开始",
+      "en": "Datasheet — a chip vendor's official manual covering pins, register maps and electrical limits; the single authoritative source, and the first thing to read for any new chip",
+      "q": "chip datasheet"
+    },
+    {
+      "term": "pinout",
+      "zh": "引脚映射表——哪个外设接在哪号引脚的官方对照表;引脚号永远查它,不背、不猜、不信论坛帖子",
+      "en": "Pinout — the official table showing which peripheral connects to which pin number; always look pin numbers up here rather than memorizing, guessing, or trusting forum posts",
+      "q": "pinout diagram pin mapping"
+    },
+    {
+      "term": "RMS",
+      "zh": "均方根(Root Mean Square)——衡量信号平均能量的统计量;音频里用它表示'响度',比瞬时幅度更贴近人耳的感受",
+      "en": "Root Mean Square — a statistical measure of a signal's average energy; in audio it represents perceived loudness far better than any single instantaneous amplitude value",
+      "q": "RMS audio volume level"
+    },
+    {
+      "term": "dBm",
+      "zh": "以 1 毫瓦为基准的对数功率单位——每差 3dB 功率差一倍;WiFi 信号强度(RSSI)用它计量,所以数值都是负数",
+      "en": "A logarithmic power unit referenced to 1 milliwatt — every 3 dB difference doubles or halves the power; WiFi signal strength (RSSI) is measured in it, hence the negative numbers",
+      "q": "dBm signal strength unit"
+    }
+  ]
+}
