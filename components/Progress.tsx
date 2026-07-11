@@ -2,16 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { STRINGS, type Locale } from "@/lib/i18n";
-
-const KEY = "cardputer-done";
-
-function readDone(): string[] {
-  try {
-    return JSON.parse(localStorage.getItem(KEY) ?? "[]");
-  } catch {
-    return [];
-  }
-}
+import { DONE_KEY, readDone } from "@/lib/progress";
 
 /** Checkmark shown on the roadmap for completed lessons. */
 export function DoneMark({ slug }: { slug: string }) {
@@ -34,7 +25,7 @@ export function DoneButton({ slug, locale = "zh" }: { slug: string; locale?: Loc
   function toggle() {
     const current = readDone();
     const next = done ? current.filter((s) => s !== slug) : [...current, slug];
-    localStorage.setItem(KEY, JSON.stringify(next));
+    localStorage.setItem(DONE_KEY, JSON.stringify(next));
     setDone(!done);
   }
 

@@ -1,5 +1,6 @@
 import CardputerDevice from "@/components/CardputerDevice";
 import { DoneMark } from "@/components/Progress";
+import ResumeButton from "@/components/ResumeButton";
 import { getAllLessons, getCourse, shortTopics } from "@/lib/lessons";
 import { STRINGS, type Locale } from "@/lib/i18n";
 
@@ -27,9 +28,10 @@ export default function HomeView({ locale }: { locale: Locale }) {
           <p className="hero-intro">{course.intro}</p>
           <div className="hero-actions">
             {lessons.length > 0 && (
-              <a className="btn-primary" href={`${prefix}/lessons/${lessons[0].slug}`}>
-                {t.startBtn}
-              </a>
+              <ResumeButton
+                lessons={lessons.map((l) => ({ slug: l.slug, order: l.order, title: l.title }))}
+                locale={locale}
+              />
             )}
             <a className="btn-ghost" href="#lessons">
               {t.browseBtn}

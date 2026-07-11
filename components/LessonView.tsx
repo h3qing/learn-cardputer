@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getAllLessons, getLessonBySlug, shortTopics } from "@/lib/lessons";
 import { renderMarkdown } from "@/lib/markdown";
 import { DoneButton } from "@/components/Progress";
+import LessonRail from "@/components/LessonRail";
 import { STRINGS, type Locale } from "@/lib/i18n";
 
 export default function LessonView({ locale, slug }: { locale: Locale; slug: string }) {
@@ -17,6 +18,11 @@ export default function LessonView({ locale, slug }: { locale: Locale; slug: str
 
   return (
     <main className="lesson-page">
+      <LessonRail
+        lessons={lessons.map((l) => ({ slug: l.slug, order: l.order, title: l.title }))}
+        currentSlug={lesson.slug}
+        locale={locale}
+      />
       <div className="lesson-header">
         <a href={`${prefix}/#lessons`} className="crumb">
           {t.crumb}
